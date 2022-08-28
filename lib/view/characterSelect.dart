@@ -52,7 +52,7 @@ class _OwnTeam extends ConsumerWidget{
       builder: (context, candidateData, rejectedData) {
         return Container(
           color: const Color.fromRGBO(111, 47, 219, 1.0),
-          child: ListView(
+          child: Column(
             children: [
               for(final member in ownTeam)
                 RemovableCharacterView(character: member, own: true),
@@ -76,7 +76,7 @@ class _OppositionTeam extends ConsumerWidget{
       builder: (context, candidateData, rejectedData) {
         return Container(
           color: const Color.fromRGBO(244, 132, 54, 1.0),
-          child: ListView(
+          child: Column(
             children: [
               for(final member in oppositionTeam)
                 RemovableCharacterView(character: member, own: false),
@@ -97,6 +97,7 @@ class _DraggableCharacter extends StatelessWidget{
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 10,
         ),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           for(final character in Character.values)
             Draggable(
