@@ -15,6 +15,8 @@ import 'package:unite_board/view/character.dart';
 import 'package:unite_board/model/character.dart';
 import 'package:unite_board/model/team.dart';
 
+import '../model/ProfileCommand.dart';
+
 final GlobalKey _mapKey = GlobalKey();
 
 class Home extends StatelessWidget{
@@ -34,18 +36,205 @@ class Home extends StatelessWidget{
             ),
           ),
           backgroundColor: const Color.fromRGBO(42, 105, 140, 1.0),
-          body: _StackBody(),
-          floatingActionButton: FloatingActionButton(
-            mini: true,
-            child: const Icon(Icons.supervised_user_circle_outlined),
-            onPressed: () async {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CharacterSelect()));
-            },
+          body: _FlexibleBody(),
+          // floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(right: 90),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Transform.scale(
+                  scaleX: 0.7,
+                  scaleY: 0.7,
+                  child: FloatingActionButton(
+                    heroTag: 'setting',
+                    mini: true,
+                    child: const Icon(Icons.settings),
+                    onPressed: () {
+                      showModalBottomSheet<ProfileCommand>(
+                        context: context,
+                        builder: (context) {
+                          return _SettingGrid();
+                        },
+                      ).then((command) {
+                        if(command != null){
+                          switch(command){
+                          // case ProfileCommand.RENAME:
+                          //   Navigator.of(context).pushReplacement(fadeTransitionRoute(EditProvider(profile: profile, mode: EditMode.PROFILE,)));
+                          //   break;
+                          // case ProfileCommand.THUMBNAIL:
+                          // /// TODO editThumbnail
+                          //   break;
+                            case ProfileCommand.LICENCE:
+                              showLicensePage(context: context);
+                              break;
+                          // /// TODO PRIVACY launch
+                          //   case ProfileCommand.PRIVACY:
+                          //     launch('https://aside-jp.studio.site/privacy');
+                          //     break;
+                          // /// TODO TOS launch
+                          //   case ProfileCommand.TOS:
+                          //     launch('https://aside-jp.studio.site/tos');
+                          //     break;
+                            default:
+
+                          }
+                        }
+                        // 何もしない
+                      });
+                    },
+                  ),
+                ),
+                // const Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 0),
+                // ),
+                FloatingActionButton(
+                  heroTag: 'member',
+                  mini: true,
+                  child: const Icon(Icons.supervised_user_circle_outlined),
+                  onPressed: () async {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CharacterSelect()));
+                  },
+                ),
+              ],
+            ),
           ),
     ),
     );
   }
+}
 
+class _SettingMenu extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(100, 150, 150, 1.0)),
+        shape: MaterialStateProperty.all<CircleBorder>(const CircleBorder(
+            side: BorderSide(
+              color: Color.fromRGBO(100, 150, 150, 1.0),
+              width: 2,
+            )))
+      ),
+      child: const Icon(Icons.settings,color: Colors.white,),
+      onPressed: () {
+        showModalBottomSheet<ProfileCommand>(
+          context: context,
+          builder: (context) {
+            return _SettingGrid();
+          },
+        ).then((command) {
+          if(command != null){
+            switch(command){
+              // case ProfileCommand.RENAME:
+              //   Navigator.of(context).pushReplacement(fadeTransitionRoute(EditProvider(profile: profile, mode: EditMode.PROFILE,)));
+              //   break;
+              // case ProfileCommand.THUMBNAIL:
+              // /// TODO editThumbnail
+              //   break;
+              case ProfileCommand.LICENCE:
+                showLicensePage(context: context);
+                break;
+            // /// TODO PRIVACY launch
+            //   case ProfileCommand.PRIVACY:
+            //     launch('https://aside-jp.studio.site/privacy');
+            //     break;
+            // /// TODO TOS launch
+            //   case ProfileCommand.TOS:
+            //     launch('https://aside-jp.studio.site/tos');
+            //     break;
+              default:
+
+            }
+          }
+          // 何もしない
+        });
+      },
+    );
+  }
+}
+
+class _SettingGrid extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color.fromRGBO(42, 105, 140, 1.0),
+      child: Wrap(
+        textDirection: TextDirection.rtl,
+        children: const [
+          // _SettingButton(
+          //     text: 'ユーザー名変更',
+          //     command:ProfileCommand.RENAME,
+          //     icon: Icons.drive_file_rename_outline_rounded
+          // ),
+          // _SettingButton(
+          //     text: '',
+          //     command:ProfileCommand.NON,
+          //     icon: Icons.drive_file_rename_outline_rounded
+          // ),
+          // _SettingButton(
+          //     text: '',
+          //     command:ProfileCommand.NON,
+          //     icon: Icons.drive_file_rename_outline_rounded
+          // ),
+          _SettingButton(
+              text: 'ライセンス表示',
+              command:ProfileCommand.LICENCE,
+              icon: Icons.text_snippet_outlined
+          ),
+          // _SettingButton(
+          //     text: '利用規約',
+          //     command:ProfileCommand.TOS,
+          //     icon: Icons.safety_divider_outlined
+          // ),
+          // _SettingButton(
+          //     text: 'プライバシーポリシー',
+          //     command:ProfileCommand.PRIVACY,
+          //     icon: Icons.policy_outlined
+          // ),
+        ],
+
+      ),
+    );
+  }
+}
+
+class _SettingButton extends StatelessWidget{
+  final IconData icon;
+  final String text;
+  final ProfileCommand command;
+
+  const _SettingButton({required this.icon, required this.text,required this.command}) : super();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // color: const Color.fromRGBO(42, 105, 140, 1.0),
+      padding: const EdgeInsets.all(10),
+      // height: MediaQuery.of(context).size.width/6,
+      width: MediaQuery.of(context).size.width/3,
+      child: command != ProfileCommand.NON ? RawMaterialButton(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(icon, color: Colors.white,),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+        onPressed: (){
+          Navigator.of(context).pop(command);
+        },
+      ) : Container(),
+    );
+  }
 }
 
 class _TimeDisplay extends ConsumerWidget{
@@ -54,7 +243,12 @@ class _TimeDisplay extends ConsumerWidget{
     final announce = ref.watch(announceBoolProvider);
     return Padding(
         padding: const EdgeInsets.only(top: 10),
-        child: Text(announce.time),
+        child: Text(
+            announce.time,
+          style: const TextStyle(
+            fontSize: 18,
+          ),
+        ),
     );
   }
 
@@ -83,6 +277,43 @@ class _TimeSlider extends ConsumerWidget{
           divisions: Announce.values.length -1,
         ),
       ),
+    );
+  }
+
+}
+
+class _FlexibleBody extends ConsumerWidget{
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(homeProvider.notifier).majored(_mapKey.currentContext?.size);
+    });
+    return Row(
+      children: [
+        Expanded(
+          // flex: 1,
+            child: _StackOwnTeamTeamMember(),
+        ),
+        Flexible(
+          flex: 3,
+          child: RepaintBoundary(
+            key: _mapKey,
+            child: Container(
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/Remoat-Stadium-miniMap.jpeg'),
+                      fit: BoxFit.fitHeight,
+                      opacity: 0.5
+                  )
+              ),
+              child: _FlexibleSituation(),
+            ),
+          )),
+        Expanded(
+          // flex: 1,
+          child: _StackOppositionTeamMember(),
+        ),
+      ],
     );
   }
 
@@ -131,6 +362,18 @@ class _StackBody extends ConsumerWidget {
     );
   }
 
+}
+
+class _FlexibleSituation extends ConsumerWidget{
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final size = ref.watch(backGroundSizeProvider);
+    if(size != null){
+      return _Positions();
+    }else{
+      return Container();
+    }
+  }
 }
 
 class _Situation extends ConsumerWidget{
@@ -317,11 +560,9 @@ class _StackOwnTeamTeamMember extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final own = ref.watch(ownTeamMemberProvider).toList();
-    final size = ref.watch(backGroundSizeProvider);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
-      width: size != null ? (MediaQuery.of(context).size.width - size.width.toDouble())/2 : 100,
-      child: ListView(
+      child: Column(
         children: [
           for(final member in own)
             RepositionableCharacterView(own: true, character: member),
@@ -335,11 +576,9 @@ class _StackOppositionTeamMember extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final opposition = ref.watch(oppositionTeamMemberProvider).toList();
-    final size = ref.watch(backGroundSizeProvider);
     return SizedBox(
         height: MediaQuery.of(context).size.height,
-        width: size != null ? (MediaQuery.of(context).size.width - size.width.toDouble())/2 : 100,
-        child: ListView(
+        child: Column(
           children: [
             for(final member in opposition)
               RepositionableCharacterView(own: false, character: member),

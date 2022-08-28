@@ -13,30 +13,30 @@ class CharacterSelect extends ConsumerWidget{
   final List<int> index = [];
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-              flex: 1,
-              child: _OwnTeam()
+    return SafeArea(
+        child: Scaffold(
+          body: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                  child: _OwnTeam()
+              ),
+              Expanded(
+                  flex: 4,
+                  child: _DraggableCharacter()
+              ),
+              Expanded(
+                  child: _OppositionTeam()
+              ),
+            ],
           ),
-          Expanded(
-              flex: 6,
-              child: _DraggableCharacter()
+          floatingActionButton: FloatingActionButton(
+            mini: true,
+            child: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home())),
           ),
-          Expanded(
-              flex: 1,
-              child: _OppositionTeam()
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        mini: true,
-        child: const Icon(Icons.arrow_back),
-        onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home())),
-      ),
+        )
     );
   }
 }

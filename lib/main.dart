@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:unite_board/view/home.dart';
+import 'package:unite_board/view/splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,9 +37,9 @@ class MyApp extends StatelessWidget {
       locale: const Locale('ja', 'JP'),
       title: 'Unite Board',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
       ),
-      home: const Home(),
+      home: const Splash(),
     );
   }
 }
