@@ -1,4 +1,4 @@
-package com.uniteboard.unite_board
+package com.shivakibot.uniteboard
 
 import io.flutter.embedding.android.FlutterActivity
 

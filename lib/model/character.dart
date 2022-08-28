@@ -34,6 +34,7 @@ enum Character{
   talonflame('assets/stat-talonflame.png'),
   trevenant('assets/stat-trevenant.png'),
   tsareena('assets/stat-tsareena.png'),
+  tyranitar('assets/stat-tyranitar.png'),
   venusaur('assets/stat-venusaur.png'),
   wigglytuff('assets/stat-wigglytuff.png'),
   zeraora('assets/stat-zeraora.png');
