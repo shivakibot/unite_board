@@ -123,7 +123,7 @@ class RepositionableCharacterView extends ConsumerWidget{
     return Material(
       color: Colors.transparent,
       child: Padding(
-        padding: const EdgeInsets.all(3),
+        padding: const EdgeInsets.all(1),
         child: InkWell(
           onTap: () => own ?
           ref.read(homeProvider.notifier).resetOwnCharacterPosition(character) :

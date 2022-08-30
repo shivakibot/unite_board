@@ -5,6 +5,7 @@ import 'package:unite_board/viewModel/ownTeamMemberVM.dart';
 import '../model/character.dart';
 import '../viewModel/homeVM.dart';
 import '../viewModel/oppositionTeamMemberVM.dart';
+import 'ad.dart';
 import 'character.dart';
 import 'home.dart';
 
@@ -36,6 +37,7 @@ class CharacterSelect extends ConsumerWidget{
             child: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home())),
           ),
+          // bottomNavigationBar: const BannerAdView(),
         )
     );
   }
@@ -92,6 +94,7 @@ class _DraggableCharacter extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(vertical: 30),
       color: Colors.white,
       child: GridView(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

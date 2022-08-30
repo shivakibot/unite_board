@@ -14,8 +14,11 @@ import 'package:unite_board/viewModel/sizeVM.dart';
 import 'package:unite_board/view/character.dart';
 import 'package:unite_board/model/character.dart';
 import 'package:unite_board/model/team.dart';
+import 'package:unite_board/model/ProfileCommand.dart';
+import 'package:unite_board/view/ad.dart';
 
-import '../model/ProfileCommand.dart';
+import '../viewModel/rewardAdVM.dart';
+import '../viewModel/rewardedMonitor.dart';
 
 final GlobalKey _mapKey = GlobalKey();
 
@@ -37,71 +40,93 @@ class Home extends StatelessWidget{
           ),
           backgroundColor: const Color.fromRGBO(42, 105, 140, 1.0),
           body: _FlexibleBody(),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(right: 90),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Transform.scale(
-                  scaleX: 0.7,
-                  scaleY: 0.7,
-                  child: FloatingActionButton(
-                    heroTag: 'setting',
-                    mini: true,
-                    child: const Icon(Icons.settings),
-                    onPressed: () {
-                      showModalBottomSheet<ProfileCommand>(
-                        context: context,
-                        builder: (context) {
-                          return _SettingGrid();
-                        },
-                      ).then((command) {
-                        if(command != null){
-                          switch(command){
-                          // case ProfileCommand.RENAME:
-                          //   Navigator.of(context).pushReplacement(fadeTransitionRoute(EditProvider(profile: profile, mode: EditMode.PROFILE,)));
-                          //   break;
-                          // case ProfileCommand.THUMBNAIL:
-                          // /// TODO editThumbnail
-                          //   break;
-                            case ProfileCommand.LICENCE:
-                              showLicensePage(context: context);
-                              break;
-                          // /// TODO PRIVACY launch
-                          //   case ProfileCommand.PRIVACY:
-                          //     launch('https://aside-jp.studio.site/privacy');
-                          //     break;
-                          // /// TODO TOS launch
-                          //   case ProfileCommand.TOS:
-                          //     launch('https://aside-jp.studio.site/tos');
-                          //     break;
-                            default:
-
-                          }
-                        }
-                        // 何もしない
-                      });
-                    },
-                  ),
-                ),
-                // const Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 0),
-                // ),
-                FloatingActionButton(
-                  heroTag: 'member',
-                  mini: true,
-                  child: const Icon(Icons.supervised_user_circle_outlined),
-                  onPressed: () async {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CharacterSelect()));
-                  },
-                ),
-              ],
-            ),
-          ),
+            floatingActionButton: _FloatingButtons(),
+          bottomNavigationBar: const BannerAdView(),
     ),
     );
   }
+}
+
+class _FloatingButtons extends ConsumerWidget{
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final rewarded = ref.watch(rewardedMonitorProvider);
+    return Padding(
+      padding: const EdgeInsets.only(right: 90),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if(rewarded == null || rewarded == false)
+            Transform.scale(
+            scaleX: 0.7,
+            scaleY: 0.7,
+            child: FloatingActionButton(
+              heroTag: 'rewarded',
+              mini: true,
+              child: const Text('CM'),
+              onPressed: () async {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RewardedAdView()));
+              },
+            ),
+          ),
+          Transform.scale(
+            scaleX: 0.7,
+            scaleY: 0.7,
+            child: FloatingActionButton(
+              heroTag: 'setting',
+              mini: true,
+              child: const Icon(Icons.settings),
+              onPressed: () {
+                showModalBottomSheet<ProfileCommand>(
+                  context: context,
+                  builder: (context) {
+                    return _SettingGrid();
+                  },
+                ).then((command) {
+                  if(command != null){
+                    switch(command){
+                    // case ProfileCommand.RENAME:
+                    //   Navigator.of(context).pushReplacement(fadeTransitionRoute(EditProvider(profile: profile, mode: EditMode.PROFILE,)));
+                    //   break;
+                    // case ProfileCommand.THUMBNAIL:
+                    // /// TODO editThumbnail
+                    //   break;
+                      case ProfileCommand.LICENCE:
+                        showLicensePage(context: context);
+                        break;
+                    // /// TODO PRIVACY launch
+                    //   case ProfileCommand.PRIVACY:
+                    //     launch('https://aside-jp.studio.site/privacy');
+                    //     break;
+                    // /// TODO TOS launch
+                    //   case ProfileCommand.TOS:
+                    //     launch('https://aside-jp.studio.site/tos');
+                    //     break;
+                      default:
+
+                    }
+                  }
+                  // 何もしない
+                });
+              },
+            ),
+          ),
+          // const Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 0),
+          // ),
+          FloatingActionButton(
+            heroTag: 'member',
+            mini: true,
+            child: const Icon(Icons.supervised_user_circle_outlined),
+            onPressed: () async {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => CharacterSelect()));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
 }
 
 class _SettingMenu extends StatelessWidget{
@@ -292,23 +317,23 @@ class _FlexibleBody extends ConsumerWidget{
       children: [
         Expanded(
           // flex: 1,
-            child: _StackOwnTeamTeamMember(),
+          child: _StackOwnTeamTeamMember(),
         ),
         Flexible(
-          flex: 3,
-          child: RepaintBoundary(
-            key: _mapKey,
-            child: Container(
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/Remoat-Stadium-miniMap.jpeg'),
-                      fit: BoxFit.fitHeight,
-                      opacity: 0.5
-                  )
+            flex: 3,
+            child: RepaintBoundary(
+              key: _mapKey,
+              child: Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/Remoat-Stadium-miniMap.jpeg'),
+                        fit: BoxFit.fitHeight,
+                        opacity: 0.5
+                    )
+                ),
+                child: _FlexibleSituation(),
               ),
-              child: _FlexibleSituation(),
-            ),
-          )),
+            )),
         Expanded(
           // flex: 1,
           child: _StackOppositionTeamMember(),
@@ -380,6 +405,7 @@ class _Situation extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = ref.watch(backGroundSizeProvider);
+    // final rewarded = ref.watch(rewardAdProvider).completed;
     if(size != null){
       return SizedBox(
         height: size.height,
@@ -395,19 +421,30 @@ class _Situation extends ConsumerWidget{
 class _Positions extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    double aspect;
     final ownGoals = ref.watch(ownInvasionProvider);
     final oppositionGoals = ref.watch(oppositionInvasionProvider);
-    return Stack(
-      children: [
-        for(final ownGoal in ownGoals.entries)
-          _PositionGoal(color: const Color.fromRGBO(111, 47, 219, 1.0).withOpacity(0.5),own: true, position: ownGoal),
-        for(final oppositionGoal in oppositionGoals.entries)
-          _PositionGoal(color: const Color.fromRGBO(244, 132, 54, 1.0).withOpacity(0.5),own: false, position: oppositionGoal),
-        _Jungle(own: true, color: const Color.fromRGBO(42, 105, 140, 1.0).withOpacity(0.5),),
-        _Jungle(own: false, color: const Color.fromRGBO(42, 105, 140, 1.0).withOpacity(0.5),),
-        for(final neutral in constNeutralPosition.entries)
-          _NeutralPosition(position: neutral, color: const Color.fromRGBO(42, 105, 140, 1.0).withOpacity(0.5),),
-      ],
+    final rewarded = ref.watch(rewardedMonitorProvider);
+    if(rewarded != null && rewarded == true){
+      aspect = 1.0;
+    }else{
+      aspect = (MediaQuery.of(context).size.height - 50)/MediaQuery.of(context).size.height;
+    }
+    return Transform.scale(
+      scaleY: 1.0,
+      scaleX: aspect,
+      child: Stack(
+        children: [
+          for(final ownGoal in ownGoals.entries)
+            _PositionGoal(color: const Color.fromRGBO(111, 47, 219, 1.0).withOpacity(0.5),own: true, position: ownGoal),
+          for(final oppositionGoal in oppositionGoals.entries)
+            _PositionGoal(color: const Color.fromRGBO(244, 132, 54, 1.0).withOpacity(0.5),own: false, position: oppositionGoal),
+          _Jungle(own: true, color: const Color.fromRGBO(42, 105, 140, 1.0).withOpacity(0.5),),
+          _Jungle(own: false, color: const Color.fromRGBO(42, 105, 140, 1.0).withOpacity(0.5),),
+          for(final neutral in constNeutralPosition.entries)
+            _NeutralPosition(position: neutral, color: const Color.fromRGBO(42, 105, 140, 1.0).withOpacity(0.5),),
+        ],
+      ),
     );
   }
 }
@@ -560,8 +597,9 @@ class _StackOwnTeamTeamMember extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final own = ref.watch(ownTeamMemberProvider).toList();
+    // final rewarded = ref.watch(rewardAdProvider).completed;
     return SizedBox(
-      height: MediaQuery.of(context).size.height,
+      // height: rewarded ? MediaQuery.of(context).size.height : MediaQuery.of(context).size.height - 50,
       child: Column(
         children: [
           for(final member in own)
@@ -576,8 +614,9 @@ class _StackOppositionTeamMember extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final opposition = ref.watch(oppositionTeamMemberProvider).toList();
+    // final rewarded = ref.watch(rewardAdProvider).completed;
     return SizedBox(
-        height: MediaQuery.of(context).size.height,
+        // height: rewarded ? MediaQuery.of(context).size.height: MediaQuery.of(context).size.height - 50,
         child: Column(
           children: [
             for(final member in opposition)

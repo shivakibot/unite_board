@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:unite_board/repository/localDb.dart';
 import 'package:unite_board/view/home.dart';
 import 'package:unite_board/view/splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  LocalDb.init();
   SystemChrome.setPreferredOrientations([
     /// 横向き固定
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]).then((_) {
+    MobileAds.instance.initialize();
     runApp(
         const ProviderScope(child: MyApp()));
   });
