@@ -40,7 +40,7 @@ class Home extends StatelessWidget{
           backgroundColor: const Color.fromRGBO(42, 105, 140, 1.0),
           body: _FlexibleBody(),
             floatingActionButton: _FloatingButtons(),
-          bottomNavigationBar: const BannerAdView(),
+          // bottomNavigationBar: const BannerAdView(),
     ),
     );
   }
@@ -55,19 +55,19 @@ class _FloatingButtons extends ConsumerWidget{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if(rewarded == null || rewarded == false)
-            Transform.scale(
-            scaleX: 0.7,
-            scaleY: 0.7,
-            child: FloatingActionButton(
-              heroTag: 'rewarded',
-              mini: true,
-              child: const Text('CM'),
-              onPressed: () async {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RewardedAdView()));
-              },
-            ),
-          ),
+          // if(rewarded == null || rewarded == false)
+          //   Transform.scale(
+          //   scaleX: 0.7,
+          //   scaleY: 0.7,
+          //   child: FloatingActionButton(
+          //     heroTag: 'rewarded',
+          //     mini: true,
+          //     child: const Text('CM'),
+          //     onPressed: () async {
+          //       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RewardedAdView()));
+          //     },
+          //   ),
+          // ),
           Transform.scale(
             scaleX: 0.7,
             scaleY: 0.7,
@@ -442,7 +442,8 @@ class _Positions extends ConsumerWidget{
     }
     return Transform.scale(
       scaleY: 1.0,
-      scaleX: aspect,
+      scaleX: 1.0,
+      // scaleX: aspect,
       child: Stack(
         children: [
           for(final ownGoal in ownGoals.entries)
