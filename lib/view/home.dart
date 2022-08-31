@@ -16,9 +16,8 @@ import 'package:unite_board/model/character.dart';
 import 'package:unite_board/model/team.dart';
 import 'package:unite_board/model/ProfileCommand.dart';
 import 'package:unite_board/view/ad.dart';
-
-import '../viewModel/rewardAdVM.dart';
-import '../viewModel/rewardedMonitor.dart';
+import 'package:unite_board/viewModel/rewardedMonitor.dart';
+import 'package:unite_board/view/info.dart';
 
 final GlobalKey _mapKey = GlobalKey();
 
@@ -94,6 +93,9 @@ class _FloatingButtons extends ConsumerWidget{
                       case ProfileCommand.LICENCE:
                         showLicensePage(context: context);
                         break;
+                      case ProfileCommand.INFO:
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Info(),));
+                        break;
                     // /// TODO PRIVACY launch
                     //   case ProfileCommand.PRIVACY:
                     //     launch('https://aside-jp.studio.site/privacy');
@@ -168,6 +170,9 @@ class _SettingMenu extends StatelessWidget{
             //   case ProfileCommand.TOS:
             //     launch('https://aside-jp.studio.site/tos');
             //     break;
+              case ProfileCommand.INFO:
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Info(),));
+                break;
               default:
 
             }
@@ -202,6 +207,11 @@ class _SettingGrid extends StatelessWidget{
           //     command:ProfileCommand.NON,
           //     icon: Icons.drive_file_rename_outline_rounded
           // ),
+          _SettingButton(
+              text: 'このアプリについて',
+              command:ProfileCommand.INFO,
+              icon: Icons.info_outline
+          ),
           _SettingButton(
               text: 'ライセンス表示',
               command:ProfileCommand.LICENCE,

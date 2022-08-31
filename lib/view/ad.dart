@@ -3,9 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:unite_board/viewModel/bannerAdVM.dart';
 import 'package:unite_board/viewModel/rewardAdVM.dart';
-
-import '../viewModel/rewardedMonitor.dart';
-import 'home.dart';
+import 'package:unite_board/viewModel/rewardedMonitor.dart';
+import 'package:unite_board/view/home.dart';
 
 class RewardedAdView extends ConsumerStatefulWidget{
   const RewardedAdView({Key? key}) : super(key: key);
@@ -99,9 +98,11 @@ class BannerState extends ConsumerState<BannerAdView>{
     });
     final ad = ref.watch(bannerAdProvider);
     final rewarded = ref.watch(rewardedMonitorProvider);
-    debugPrint('rewarded :$rewarded ad:$ad');
+    // debugPrint('rewarded :$rewarded ad:$ad');
     if(rewarded == null || ad == null){
-      return const Center(
+      return const SizedBox(
+        width: 50,
+        height: 50,
         child: CircularProgressIndicator(),
       );
     }

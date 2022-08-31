@@ -4,5 +4,6 @@ enum ProfileCommand{
   LICENCE,
   // PRIVACY,
   // TOS,// Terms of Service
+  INFO,
   NON,
 }
