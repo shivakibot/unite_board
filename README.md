@@ -1,16 +1,34 @@
 # unite_board
 
-A new Flutter project.
+[ポケモンユナイト](https://www.pokemonunite.jp/ja/)のチームプレイ向けに、戦略を共有するのに最適なミニマップ風のボードアプリ。<br>
+- 残り時間設定
+- ゴール侵攻状況の設定
+- マップにキャラクターの配置
 
-## Getting Started
+# 開発環境
+- Flutter 3.0.5
+- Dart 2.17.6
+- Android Studio
+- Procreate
 
-This project is a starting point for a Flutter application.
+# その他利用ツール
+- Figma
+- Adobe Fresco
+- Milanote
 
-A few resources to get you started if this is your first Flutter project:
+# 開発期間
+- 7人日ほど
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# 開発経緯
+ ポケモンユナイトは多言語対応で配信されているMOBAのゲームタイトルです。<br>5vs5の対戦になるので、1-5人までチームプレイできます。チームメイトのマッチングにはある程度のパターンがあり、<br>
+ - 5 : 5
+ - 2+3 : 5
+ - 2+2+1 : 2+3
+ - 2+1+1+1 : 3+1+1
+ <br>
+ など、ソロプレイをしていても大きい集団のチームが入ることが多々あり、全体的な戦略を理解しているユーザである方が戦略性も貢献度も上がります。<br>
+  しかし、公式アプリ内では戦略を共有する為のリソースが実際のプレイ動画以外にない状態です。そこでスマホアプリとしてシンプルに操作できるホワイトボード風のSingle View Applicationをリリースし、スクリーンショットを活用してSNSへの共有ができるように機能すれば、よりプレイヤーの戦略性やコミュニケーションロスを減らせるかもと思いついて作成。
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# 現状
+ ポケモンユナイトは条件を満たす場合に限り、著作権を主張しないガイドラインを設定しており、コンテンツ画像をwebで公開するなどが合法のケース（主にSNS投稿など）となっています。<br>
+ そこでAppStoreに提出したところ、上記ガイドラインでは要件を満たさないとしてリジェクトとなった為、開発中止。
