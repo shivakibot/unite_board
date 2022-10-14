@@ -1,5 +1,6 @@
 # unite_board
-![キャラクター選択](https://drive.google.com/file/d/1D7zofVo_KUqAhX6gyunmpVP3J87Cybeu/view?usp=sharing)
+![キャラクター選択](http://drive.google.com/uc?export=view&id=1D7zofVo_KUqAhX6gyunmpVP3J87Cybeu)
+![マップ](http://drive.google.com/uc?export=view&id=1r8Cooq5oPaK04TscDYDmeb6aPWm4YNba)
 [ポケモンユナイト](https://www.pokemonunite.jp/ja/)のチームプレイ向けに、戦略を共有するのに最適なミニマップ風のボードアプリ。<br>
 - 残り時間設定
 - ゴール侵攻状況の設定
