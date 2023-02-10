@@ -15,8 +15,8 @@ class Admob {
   static const String _demoAdBannerIos = 'ca-app-pub-3940256099942544/2934735716';
   /// TODO
   static const String _releaseAdUnitAndroid = '';
-  static const String _releaseAdBannerIos = 'ca-app-pub-5922079786161480/2515362715';
-  static const String _releaseAdRewardIos = 'ca-app-pub-5922079786161480/2066153611';
+  static const String _releaseAdBannerIos = '';
+  static const String _releaseAdRewardIos = '';
   static const isRelease = bool.fromEnvironment('dart.vm.product');
   factory Admob(){
     if (isRelease) {
